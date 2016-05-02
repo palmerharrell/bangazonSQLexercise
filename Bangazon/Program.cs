@@ -11,35 +11,19 @@ namespace Bangazon
   {
     static void Main(string[] args)
     {
-      // SQL CONNECTION AND READ TEST
-      
-      string query2 = @"
-        SELECT * FROM Product
-        ORDER BY Product.Name
-      ";
-
-      using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\windows-workspace\\bangazonCLIordering\\Bangazon\\Invoices.mdf\";Integrated Security=True"))
-      using (SqlCommand cmd = new SqlCommand(query2, connection))
+      // ~~~ getProducts TEST ~~~
+      InvoiceDb db = new InvoiceDb();
+      List<Product> allProducts = db.getProducts();
+      foreach(Product prod in allProducts)
       {
-        connection.Open();
-        using (SqlDataReader reader = cmd.ExecuteReader())
-        {
-          // Check if the reader has any rows at all before starting to read.
-          if (reader.HasRows)
-          {
-            // Read advances to the next row.
-            Console.WriteLine(reader.GetName(2));
-            Console.WriteLine(reader.HasRows);
-            while (reader.Read())
-            {
-               Console.WriteLine("{0}, {1}, {2}, {3}",
-                   reader[0], reader[1], reader[2], reader[3]);
-              //Console.WriteLine("Field count: " + reader.FieldCount);
-            }
-          }
-        }
+        Console.WriteLine("\nID: {0}", prod.idProduct);
+        Console.WriteLine("Type ID: {0}", prod.idProductType);
+        Console.WriteLine("Name: {0}", prod.name);
+        Console.WriteLine("Price: {0}", prod.price);
+        Console.WriteLine("Description: {0}", prod.description);
+      }
 
-      } // using (sqlCommand...
+      
     } // Main
   } // Program Class
 } // Namespace
