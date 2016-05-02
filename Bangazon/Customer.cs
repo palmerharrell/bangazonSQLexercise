@@ -9,8 +9,7 @@ namespace Bangazon
   public class Customer
   {
     public int idCustomer { get; set; }
-    public string firstName { get; set; }
-    public string lastName { get; set; }
+    public string name { get; set; }
     public string streetAddress { get; set; }
     public string city { get; set; }
     public string state { get; set; }
