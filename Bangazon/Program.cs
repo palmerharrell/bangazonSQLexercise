@@ -11,8 +11,9 @@ namespace Bangazon
   {
     static void Main(string[] args)
     {
-      // ~~~ getProducts TEST ~~~
       InvoiceDb db = new InvoiceDb();
+
+      // ~~~ getProducts TEST ~~~
       List<Product> allProducts = db.getProducts();
       foreach(Product prod in allProducts)
       {

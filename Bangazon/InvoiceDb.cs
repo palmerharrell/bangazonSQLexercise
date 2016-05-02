@@ -46,7 +46,7 @@ namespace Bangazon
         }
       }
       return productList;
-    }
+    } // getProducts()
 
   }
 }
