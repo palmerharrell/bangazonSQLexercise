@@ -13,6 +13,7 @@ namespace Bangazon
     {
       InvoiceDb db = new InvoiceDb();
       int menuChoice;
+      int prodChoice;
       string outputStr = "";
       bool quitProgram = false;
 
@@ -30,15 +31,14 @@ namespace Bangazon
         Console.WriteLine("3.Order a product");
         Console.WriteLine("4.Complete an order");
         Console.WriteLine("5.See product popularity");
-        Console.WriteLine("6.Leave Bangazon!");
-        Console.WriteLine("\n" + outputStr + "\n");
+        Console.WriteLine("6.Leave Bangazon!\n");
+        //Console.WriteLine("\n" + outputStr + "\n");
         Console.Write(">");
         Int32.TryParse(Console.ReadLine(), out menuChoice);
 
         switch (menuChoice)
         {
-          case 1:
-            //outputStr = "Choice: Create an account";
+          case 1: // CREATE AN ACCOUNT
             Customer newCustomer = new Customer();
             Console.WriteLine("Enter customer name");
             Console.Write(">");
@@ -59,29 +59,47 @@ namespace Bangazon
             Console.Write(">");
             newCustomer.phoneNumber = Console.ReadLine();
             db.addCustomer(newCustomer);
-            // Console.WriteLine("New Customer Added:");
-            // Console.WriteLine(newCustomer.name);
-            // Console.WriteLine(newCustomer.streetAddress);
-            // Console.WriteLine(newCustomer.city);
-            // Console.WriteLine(newCustomer.state);
-            // Console.WriteLine(newCustomer.postalCode);
-            // Console.WriteLine(newCustomer.phoneNumber);
-            // Console.Read();
-
+            outputStr = "Customer added";
             break;
-          case 2:
+          case 2: // CREATE A PAYMENT OPTION
             outputStr = "Choice: Create a payment option";
             break;
-          case 3:
-            outputStr = "Choice: Order a product";
+          case 3: // ORDER A PRODUCT
+            List<Product> allProducts = db.getProducts();
+            int numProds = 0;
+
+            Console.Clear();
+            Console.WriteLine("\n*********************************************************");
+            Console.WriteLine("**  Welcome to Bangazon! Command Line Ordering System  **");
+            Console.WriteLine("*********************************************************\n");
+
+            foreach (Product prod in allProducts)
+            {
+              Console.WriteLine("{0}: {1}", numProds+1, prod.name);
+              numProds++;
+            }
+            Console.WriteLine("{0}: Back to Main Menu\n", numProds+1);
+            Console.Write(">");
+            Int32.TryParse(Console.ReadLine(), out prodChoice);
+            if (prodChoice == numProds+1)
+            {
+              break; // Back to main menu
+            }
+            else
+            {
+              // Add product to list of products for order (orderProducts or something)
+              // Loop back to product menu somehow
+              Console.WriteLine("You chose: {0}", allProducts[prodChoice - 1].name);
+              Console.Read();
+            }
             break;
-          case 4:
+          case 4: // COMPLETE AN ORDER
             outputStr = "Choice: Complete an order";
             break;
-          case 5:
+          case 5: // SEE PRODUCT POPULARITY
             outputStr = "Choice: See product popularity";
             break;
-          case 6:
+          case 6: // EXIT
             outputStr = "Goodbye!";
             Console.Clear();
             Console.WriteLine("\n*********************************************************");

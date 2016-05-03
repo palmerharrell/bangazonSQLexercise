@@ -17,4 +17,3 @@ namespace Bangazon
     public string phoneNumber { get; set; }
   }
 }
-
