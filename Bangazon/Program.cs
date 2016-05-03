@@ -80,8 +80,15 @@ namespace Bangazon
             }
             Console.Write(">");
             Int32.TryParse(Console.ReadLine(), out selectedCust);
-            Console.WriteLine("Customer chosen: {0}", allCustomers[selectedCust - 1].name);
-            System.Threading.Thread.Sleep(1000);
+            pmt.idCustomer = allCustomers[selectedCust - 1].idCustomer;
+            Console.WriteLine("Enter payment type (e.g. AmEx, Visa, Checking)");
+            Console.Write(">");
+            pmt.name = Console.ReadLine();
+            Console.WriteLine("Enter account number");
+            Console.Write(">");
+            pmt.accountNumber = Int32.Parse(Console.ReadLine());
+            db.addPmtOption(pmt); // not written yet
+            outputStr = "Payment method added";
             break;
           case 3: // ORDER A PRODUCT
             bool productView = true;
