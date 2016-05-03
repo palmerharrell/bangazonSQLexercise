@@ -33,10 +33,8 @@ namespace Bangazon
         Console.WriteLine("4.Complete an order");
         Console.WriteLine("5.See product popularity");
         Console.WriteLine("6.Leave Bangazon!\n");
-        //Console.WriteLine("\n" + outputStr + "\n");
         Console.Write(">");
         Int32.TryParse(Console.ReadLine(), out menuChoice);
-        //menuChoice = int.Parse(Console.ReadLine());
 
         switch (menuChoice)
         {
@@ -64,7 +62,6 @@ namespace Bangazon
             outputStr = "Customer added";
             break;
           case 2: // CREATE A PAYMENT OPTION
-            //outputStr = "Choice: Create a payment option";
             PaymentOption pmt = new PaymentOption();
             List<Customer> allCustomers = db.getCustomers();
             int numCusts = 0;
@@ -122,7 +119,6 @@ namespace Bangazon
                 orderProducts.Add(allProducts[prodChoice - 1]);
                 Console.WriteLine("{0} added to order", allProducts[prodChoice - 1].name);
                 System.Threading.Thread.Sleep(1000);
-                
               }
             }
 
