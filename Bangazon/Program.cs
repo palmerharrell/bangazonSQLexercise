@@ -12,6 +12,7 @@ namespace Bangazon
     static void Main(string[] args)
     {
       InvoiceDb db = new InvoiceDb();
+      List<Product> orderProducts = new List<Product>();
       int menuChoice;
       int prodChoice;
       string outputStr = "";
@@ -110,15 +111,15 @@ namespace Bangazon
               Console.WriteLine("{0}: Back to Main Menu\n", numProds + 1);
               Console.Write(">");
               Int32.TryParse(Console.ReadLine(), out prodChoice);
-              if (prodChoice == numProds + 1)
+              if (prodChoice >= numProds + 1)
               {
                 productView = false; // Back to main menu
               }
               else
               {
                 // Add product to list of products for order (orderProducts or something)
-
-                Console.WriteLine("You chose: {0}", allProducts[prodChoice - 1].name);
+                orderProducts.Add(allProducts[prodChoice - 1]);
+                Console.WriteLine("{0} added to order", allProducts[prodChoice - 1].name);
                 System.Threading.Thread.Sleep(1000);
                 
               }
