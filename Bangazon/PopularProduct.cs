@@ -11,6 +11,6 @@ namespace Bangazon
     public string name { get; set; }
     public int numOrdered { get; set; }
     public int numCustomers { get; set; }
-    public float totalRevenue { get; set; }
+    public double totalRevenue { get; set; }
   }
 }

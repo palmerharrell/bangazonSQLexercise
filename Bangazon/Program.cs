@@ -36,6 +36,7 @@ namespace Bangazon
         //Console.WriteLine("\n" + outputStr + "\n");
         Console.Write(">");
         Int32.TryParse(Console.ReadLine(), out menuChoice);
+        //menuChoice = int.Parse(Console.ReadLine());
 
         switch (menuChoice)
         {
@@ -166,8 +167,8 @@ namespace Bangazon
                 }
                 Console.Write(">");
                 currOrder.idPaymentOption = int.Parse(Console.ReadLine());
-                Console.WriteLine("Your order is complete! Press any key to return to main menu.");
                 db.addOrder(currOrder.idCustomer, currOrder.idPaymentOption, orderProducts);
+                Console.WriteLine("Your order is complete! Press any key to return to main menu.");
                 orderProducts.Clear();
                 Console.Read();
                 break;
@@ -178,7 +179,17 @@ namespace Bangazon
               }
             }
           case 5: // SEE PRODUCT POPULARITY
-            outputStr = "Choice: See product popularity";
+            List<PopularProduct> popProds = db.getPopularProducts();
+            Console.Clear();
+            Console.WriteLine("\n*********************************************************");
+            Console.WriteLine("**  Welcome to Bangazon! Command Line Ordering System  **");
+            Console.WriteLine("*********************************************************\n");
+            foreach (PopularProduct prod in popProds)
+            {
+              Console.WriteLine("{0} ordered {1} times by {2} customers for total revenue of ${3}.", prod.name, prod.numOrdered, prod.numCustomers, prod.totalRevenue);
+            }
+            Console.WriteLine("\nPress enter to return to main menu");
+            Console.Read();
             break;
           case 6: // EXIT
             outputStr = "Goodbye!";
