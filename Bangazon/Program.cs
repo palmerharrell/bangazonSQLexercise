@@ -87,7 +87,7 @@ namespace Bangazon
             Console.WriteLine("Enter account number");
             Console.Write(">");
             pmt.accountNumber = Int32.Parse(Console.ReadLine());
-            db.addPmtOption(pmt); // not written yet
+            db.addPmtOption(pmt);
             outputStr = "Payment method added";
             break;
           case 3: // ORDER A PRODUCT

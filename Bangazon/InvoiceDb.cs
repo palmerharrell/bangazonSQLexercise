@@ -9,10 +9,10 @@ namespace Bangazon
 {
   public class InvoiceDb
   {
-    public bool parseInput(string userInput) // call methods from here? or set flags and call from Program?
-    {
-      return false;
-    }
+    // public bool parseInput(string userInput) // call methods from here? or set flags and call from Program?
+    // {
+    //   return false;
+    // }
 
     public List<Product> getProducts() // read from db, return list of all products
     {
@@ -105,5 +105,24 @@ namespace Bangazon
       cmd.ExecuteNonQuery();
       sqlConnection1.Close();
     } // End addCustomer()
+
+    public void addPmtOption(PaymentOption newPmt)
+    {
+      SqlConnection sqlConnection1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\windows-workspace\\bangazonCLIordering\\Bangazon\\Invoices.mdf\";Integrated Security=True");
+      SqlCommand cmd = new SqlCommand();
+      StringBuilder command = new StringBuilder();
+      command.Append("INSERT INTO PaymentOption (IdCustomer, Name, AccountNumber) VALUES (")
+      .Append("'").Append(newPmt.idCustomer).Append("', ")
+      .Append("'").Append(newPmt.name).Append("', ")
+      .Append("'").Append(newPmt.accountNumber).Append("')");
+      
+      cmd.CommandType = System.Data.CommandType.Text;
+      cmd.CommandText = command.ToString();
+      cmd.Connection = sqlConnection1;
+
+      sqlConnection1.Open();
+      cmd.ExecuteNonQuery();
+      sqlConnection1.Close();
+    }
   }
 }
