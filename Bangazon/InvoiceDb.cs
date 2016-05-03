@@ -48,6 +48,41 @@ namespace Bangazon
       return productList;
     } // End getProducts()
 
+    public List<Customer> getCustomers()
+    {
+      string query = @"
+        SELECT * FROM Customer
+        ORDER BY Customer.Name
+      ";
+
+      List<Customer> customerList = new List<Customer>();
+
+      using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\windows-workspace\\bangazonCLIordering\\Bangazon\\Invoices.mdf\";Integrated Security=True"))
+      using (SqlCommand cmd = new SqlCommand(query, connection))
+      {
+        connection.Open();
+        using (SqlDataReader reader = cmd.ExecuteReader())
+        {
+          if (reader.HasRows)
+          {
+            while (reader.Read()) // Read advances to the next row.
+            {
+              Customer currCust = new Customer();
+              currCust.idCustomer = (int)reader[0];
+              currCust.name = (string)reader[1];
+              currCust.streetAddress = (string)reader[2];
+              currCust.city = (string)reader[3];
+              currCust.state = (string)reader[4];
+              currCust.postalCode = (string)reader[5];
+              currCust.phoneNumber = (string)reader[6];
+              customerList.Add(currCust);
+            }
+          }
+        }
+      }
+      return customerList;
+    }
+
     public void addCustomer(Customer newCustomer)
     {
       SqlConnection sqlConnection1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\windows-workspace\\bangazonCLIordering\\Bangazon\\Invoices.mdf\";Integrated Security=True");
