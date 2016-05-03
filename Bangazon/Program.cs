@@ -87,7 +87,7 @@ namespace Bangazon
             pmt.name = Console.ReadLine();
             Console.WriteLine("Enter account number");
             Console.Write(">");
-            pmt.accountNumber = Int32.Parse(Console.ReadLine());
+            pmt.accountNumber = Console.ReadLine();
             db.addPmtOption(pmt);
             outputStr = "Payment method added";
             break;
@@ -127,8 +127,56 @@ namespace Bangazon
 
             break;
           case 4: // COMPLETE AN ORDER
-            outputStr = "Choice: Complete an order";
-            break;
+            if (orderProducts.Count < 1)
+            {
+              Console.WriteLine("\nPlease add some products to your order first. Press any key to return to main menu.");
+              Console.Read();
+              break;
+            }
+            else
+            {
+              float orderTotal = 0;
+              Order currOrder = new Order();
+              foreach (Product prod in orderProducts)
+              {
+                orderTotal += prod.price;
+              }
+              Console.WriteLine("Your order total is ${0}. Ready to purchase", orderTotal);
+              Console.Write("(Y/N) >");
+              if (Console.ReadLine().ToUpper() == "Y")
+              {
+                numCusts = 0;
+                allCustomers = db.getCustomers();
+                Console.WriteLine("Which customer is placing the order?");
+                foreach (Customer cust in allCustomers)
+                {
+                  Console.WriteLine("{0}: {1}", numCusts + 1, cust.name);
+                  numCusts++;
+                }
+                Console.Write(">");
+                Int32.TryParse(Console.ReadLine(), out selectedCust);
+                currOrder.idCustomer = allCustomers[selectedCust - 1].idCustomer;
+                Console.WriteLine("Choose a payment option");
+                List<PaymentOption> paymentOptions = db.getPmtOptions(currOrder.idCustomer);
+                int numOpts = 0;
+                foreach (PaymentOption opt in paymentOptions)
+                {
+                  Console.WriteLine("{0}: {1}", numOpts+1, opt.name);
+                  numOpts++;
+                }
+                Console.Write(">");
+                currOrder.idPaymentOption = int.Parse(Console.ReadLine());
+                Console.WriteLine("Your order is complete! Press any key to return to main menu.");
+                db.addOrder(currOrder.idCustomer, currOrder.idPaymentOption, orderProducts);
+                orderProducts.Clear();
+                Console.Read();
+                break;
+              }
+              else
+              {
+                break; // back to main menu
+              }
+            }
           case 5: // SEE PRODUCT POPULARITY
             outputStr = "Choice: See product popularity";
             break;
@@ -150,19 +198,7 @@ namespace Bangazon
           default:
             outputStr = "Invalid choice. Please choose from the menu above.";
             break;
-        }
-
-        // // ~~~ getProducts TEST ~~~
-        // List<Product> allProducts = db.getProducts();
-        // foreach(Product prod in allProducts)
-        // {
-        //   Console.WriteLine("\nID: {0}", prod.idProduct);
-        //   Console.WriteLine("Type ID: {0}", prod.idProductType);
-        //   Console.WriteLine("Name: {0}", prod.name);
-        //   Console.WriteLine("Price: {0}", prod.price);
-        //   Console.WriteLine("Description: {0}", prod.description);
-        // }
-
+        } // End Menu Switch
       } // End Menu Loop
     } // End Main
   } // End Program Class

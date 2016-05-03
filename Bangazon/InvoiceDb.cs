@@ -9,11 +9,7 @@ namespace Bangazon
 {
   public class InvoiceDb
   {
-    // public bool parseInput(string userInput) // call methods from here? or set flags and call from Program?
-    // {
-    //   return false;
-    // }
-
+    
     public List<Product> getProducts() // read from db, return list of all products
     {
       string query = @"
@@ -81,7 +77,7 @@ namespace Bangazon
         }
       }
       return customerList;
-    }
+    } // End getCustomers()
 
     public void addCustomer(Customer newCustomer)
     {
@@ -106,6 +102,35 @@ namespace Bangazon
       sqlConnection1.Close();
     } // End addCustomer()
 
+    public List<PaymentOption> getPmtOptions(int custId)
+    {
+      string query = ("SELECT * FROM PaymentOption WHERE IdCustomer = " + custId);
+
+      List<PaymentOption> pmtOptions = new List<PaymentOption>();
+
+      using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\windows-workspace\\bangazonCLIordering\\Bangazon\\Invoices.mdf\";Integrated Security=True"))
+      using (SqlCommand cmd = new SqlCommand(query, connection))
+      {
+        connection.Open();
+        using (SqlDataReader reader = cmd.ExecuteReader())
+        {
+          if (reader.HasRows)
+          {
+            while (reader.Read()) // Read advances to the next row.
+            {
+              PaymentOption currOption = new PaymentOption();
+              currOption.idPaymentOption = (int)reader[0];
+              currOption.idCustomer = (int)reader[1];
+              currOption.name = (string)reader[2];
+              currOption.accountNumber = (string)reader[3];
+              pmtOptions.Add(currOption);
+            }
+          }
+        }
+      }
+      return pmtOptions;
+    } // End getPmtOptions()
+
     public void addPmtOption(PaymentOption newPmt)
     {
       SqlConnection sqlConnection1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\windows-workspace\\bangazonCLIordering\\Bangazon\\Invoices.mdf\";Integrated Security=True");
@@ -123,6 +148,15 @@ namespace Bangazon
       sqlConnection1.Open();
       cmd.ExecuteNonQuery();
       sqlConnection1.Close();
+    } // End addPmtOption()
+
+    public void addOrder(int idCust, int idPmt, List<Product> orderProds)
+    {
+      // 1. Add order to CustomerOrder Table
+      // 2. Get IdOrder for order that was just added
+      // 3. Loop through orderProds list and add each product to OrderProducts table
     }
-  }
-}
+
+  } // End InvoiceDb Class
+} // End Namespace
+

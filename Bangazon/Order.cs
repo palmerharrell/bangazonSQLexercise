@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Bangazon
 {
-  public class PaymentOption
+  public class Order
   {
-    public int idPaymentOption { get; set; }
+    public int idOrder { get; }
+    public DateTime dateCreated = new DateTime();
     public int idCustomer { get; set; }
-    public string name { get; set; }
-    public string accountNumber { get; set; }
+    public int idPaymentOption { get; set; }
+    public string shippingMethod { get; set; }
   }
 }
-

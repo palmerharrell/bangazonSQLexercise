@@ -60,7 +60,9 @@
   <ItemGroup>
     <Compile Include="Customer.cs" />
     <Compile Include="InvoiceDb.cs" />
+    <Compile Include="Order.cs" />
     <Compile Include="PaymentOption.cs" />
+    <Compile Include="PopularProduct.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
