@@ -101,5 +101,61 @@ namespace Bangazon
         }
       }
     } // End orderProduct()
+
+    public void completeOrder(List<Product> orderProducts)
+    {
+      InvoiceDb db = new InvoiceDb();
+      if (orderProducts.Count < 1)
+      {
+        Console.WriteLine("\nPlease add some products to your order first. Press any key to return to main menu.");
+        Console.Read();
+        return;
+      }
+      else
+      {
+        float orderTotal = 0;
+        Order currOrder = new Order();
+        foreach (Product prod in orderProducts)
+        {
+          orderTotal += prod.price;
+        }
+        Console.WriteLine("Your order total is ${0}. Ready to purchase", orderTotal);
+        Console.Write("(Y/N) >");
+        if (Console.ReadLine().ToUpper() == "Y")
+        {
+          int numCusts = 0;
+          int selectedCust;
+          List<Customer> allCustomers = db.getCustomers();
+          Console.WriteLine("Which customer is placing the order?");
+          foreach (Customer cust in allCustomers)
+          {
+            Console.WriteLine("{0}: {1}", numCusts + 1, cust.name);
+            numCusts++;
+          }
+          Console.Write(">");
+          Int32.TryParse(Console.ReadLine(), out selectedCust);
+          currOrder.idCustomer = allCustomers[selectedCust - 1].idCustomer;
+          Console.WriteLine("Choose a payment option");
+          List<PaymentOption> paymentOptions = db.getPmtOptions(currOrder.idCustomer);
+          int numOpts = 0;
+          foreach (PaymentOption opt in paymentOptions)
+          {
+            Console.WriteLine("{0}: {1}", numOpts + 1, opt.name);
+            numOpts++;
+          }
+          Console.Write(">");
+          currOrder.idPaymentOption = int.Parse(Console.ReadLine());
+          db.addOrder(currOrder.idCustomer, currOrder.idPaymentOption, orderProducts);
+          Console.WriteLine("Your order is complete! Press any key to return to main menu.");
+          orderProducts.Clear();
+          Console.Read();
+          return;
+        }
+        else
+        {
+          return; // back to main menu
+        }
+      }
+    }
   }
 }
