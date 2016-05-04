@@ -100,16 +100,16 @@ namespace Bangazon
           System.Threading.Thread.Sleep(1000);
         }
       }
-    } // End orderProduct()
+    }
 
-    public void completeOrder(List<Product> orderProducts)
+    public string completeOrder(List<Product> orderProducts)
     {
       InvoiceDb db = new InvoiceDb();
       if (orderProducts.Count < 1)
       {
-        Console.WriteLine("\nPlease add some products to your order first. Press any key to return to main menu.");
-        Console.Read();
-        return;
+        //Console.WriteLine("\nPlease add some products to your order first. Press any key to return to main menu.");
+        //Console.Read();
+        return "Please add some products to your order first.";
       }
       else
       {
@@ -149,13 +149,28 @@ namespace Bangazon
           Console.WriteLine("Your order is complete! Press any key to return to main menu.");
           orderProducts.Clear();
           Console.Read();
-          return;
+          return "";
         }
         else
         {
-          return; // back to main menu
+          return ""; // back to main menu
         }
       }
+    }
+
+    public void popularProducts()
+    {
+      InvoiceDb db = new InvoiceDb();
+      List<PopularProduct> popProds = db.getPopularProducts();
+      Console.Clear();
+      Console.WriteLine("\n*********************************************************");
+      Console.WriteLine("**  Welcome to Bangazon! Command Line Ordering System  **");
+      Console.WriteLine("*********************************************************\n");
+      foreach (PopularProduct prod in popProds)
+      {
+        Console.WriteLine("{0} ordered {1} times by {2} customers for total revenue of ${3}.", prod.name, prod.numOrdered, prod.numCustomers, prod.totalRevenue);
+      }
+      Console.WriteLine("\nPress enter to return to main menu");
     }
   }
 }
