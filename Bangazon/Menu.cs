@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Bangazon
 {
-  public class Menu
+  public static class Menu
   {
-    public string displayMainMenu(string outputStr)
+    public static string displayMainMenu(string outputStr)
     {
       Console.Clear();
       Console.WriteLine("\n*********************************************************");
@@ -23,7 +23,7 @@ namespace Bangazon
       return outputStr;
     }
 
-    public void addCustomer()
+    public static void addCustomer()
     {
       Customer newCustomer = new Customer();
 
@@ -48,7 +48,7 @@ namespace Bangazon
       Customer.addCustomer(newCustomer);
     }
 
-    public void addPaymentOption()
+    public static void addPaymentOption()
     {
       PaymentOption pmt = new PaymentOption();
       List<Customer> allCustomers = Customer.getCustomers();
@@ -77,7 +77,7 @@ namespace Bangazon
       PaymentOption.addPmtOption(pmt);
     }
 
-    public List<Product> orderProduct(List<Product> orderProducts)
+    public static List<Product> orderProduct(List<Product> orderProducts)
     {
       int prodChoice;
       while (true)
@@ -111,7 +111,7 @@ namespace Bangazon
       }
     }
 
-    public string completeOrder(List<Product> orderProducts)
+    public static string completeOrder(List<Product> orderProducts)
     {
       if (orderProducts.Count < 1)
       {
@@ -164,7 +164,7 @@ namespace Bangazon
       }
     }
 
-    public void popularProducts()
+    public static void popularProducts()
     {
       List<PopularProduct> popProds = PopularProduct.getPopularProducts();
       Console.Clear();
