@@ -81,7 +81,8 @@ namespace Bangazon
       Console.WriteLine("Enter account number");
       Console.Write(">");
       pmt.accountNumber = Console.ReadLine();
-      db.addPmtOption(pmt);
+      //db.addPmtOption(pmt);
+      PaymentOption.addPmtOption(pmt);
     }
 
     public List<Product> orderProduct(List<Product> orderProducts)
@@ -158,7 +159,8 @@ namespace Bangazon
           Int32.TryParse(Console.ReadLine(), out selectedCust);
           currOrder.idCustomer = allCustomers[selectedCust - 1].idCustomer;
           Console.WriteLine("Choose a payment option");
-          List<PaymentOption> paymentOptions = db.getPmtOptions(currOrder.idCustomer);
+          //List<PaymentOption> paymentOptions = db.getPmtOptions(currOrder.idCustomer);
+          List<PaymentOption> paymentOptions = PaymentOption.getPmtOptions(currOrder.idCustomer);
           int numOpts = 0;
           foreach (PaymentOption opt in paymentOptions)
           {
@@ -167,7 +169,8 @@ namespace Bangazon
           }
           Console.Write(">");
           currOrder.idPaymentOption = int.Parse(Console.ReadLine());
-          db.addOrder(currOrder.idCustomer, currOrder.idPaymentOption, orderProducts);
+          //db.addOrder(currOrder.idCustomer, currOrder.idPaymentOption, orderProducts);
+          Order.addOrder(currOrder.idCustomer, currOrder.idPaymentOption, orderProducts);
           Console.WriteLine("Your order is complete! Press any key to return to main menu.");
           orderProducts.Clear();
           Console.Read();
