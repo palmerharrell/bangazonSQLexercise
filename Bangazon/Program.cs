@@ -15,20 +15,7 @@ namespace Bangazon
 
       while (!quitProgram)
       {
-        Console.Clear();
-        Console.WriteLine("\n*********************************************************");
-        Console.WriteLine("**  Welcome to Bangazon! Command Line Ordering System  **");
-        Console.WriteLine("*********************************************************\n");
-        Console.WriteLine("1.Create an account");
-        Console.WriteLine("2.Create a payment option");
-        Console.WriteLine("3.Order a product");
-        Console.WriteLine("4.Complete an order");
-        Console.WriteLine("5.See product popularity");
-        Console.WriteLine("6.Leave Bangazon!\n");
-        Console.WriteLine("{0}\n", outputStr);
-        outputStr = "";
-        Console.Write(">");
-
+        outputStr = menu.displayMainMenu(outputStr);
         Int32.TryParse(Console.ReadLine(), out menuChoice);
 
         switch (menuChoice)

@@ -8,6 +8,24 @@ namespace Bangazon
 {
   public class Menu
   {
+    public string displayMainMenu(string outputStr)
+    {
+      Console.Clear();
+      Console.WriteLine("\n*********************************************************");
+      Console.WriteLine("**  Welcome to Bangazon! Command Line Ordering System  **");
+      Console.WriteLine("*********************************************************\n");
+      Console.WriteLine("1.Create an account");
+      Console.WriteLine("2.Create a payment option");
+      Console.WriteLine("3.Order a product");
+      Console.WriteLine("4.Complete an order");
+      Console.WriteLine("5.See product popularity");
+      Console.WriteLine("6.Leave Bangazon!\n");
+      Console.WriteLine("{0}\n", outputStr);
+      outputStr = "";
+      Console.Write(">");
+      return outputStr;
+    }
+
     public void addCustomer()
     {
       Customer newCustomer = new Customer();
@@ -31,14 +49,16 @@ namespace Bangazon
       Console.WriteLine("Enter phone number");
       Console.Write(">");
       newCustomer.phoneNumber = Console.ReadLine();
-      db.addCustomer(newCustomer);
+      //db.addCustomer(newCustomer);
+      Customer.addCustomer(newCustomer);
     }
 
     public void addPaymentOption()
     {
       PaymentOption pmt = new PaymentOption();
       InvoiceDb db = new InvoiceDb();
-      List<Customer> allCustomers = db.getCustomers();
+      //List<Customer> allCustomers = db.getCustomers();
+      List<Customer> allCustomers = Customer.getCustomers();
       int numCusts = 0;
       int selectedCust;
       Console.Clear();
@@ -72,7 +92,8 @@ namespace Bangazon
       InvoiceDb db = new InvoiceDb();
       while (true)
       {
-        List<Product> allProducts = db.getProducts();
+        //List<Product> allProducts = db.getProducts();
+        List<Product> allProducts = Product.getProducts();
         int numProds = 0;
 
         Console.Clear();
@@ -125,7 +146,8 @@ namespace Bangazon
         {
           int numCusts = 0;
           int selectedCust;
-          List<Customer> allCustomers = db.getCustomers();
+          //List<Customer> allCustomers = db.getCustomers();
+          List<Customer> allCustomers = Customer.getCustomers();
           Console.WriteLine("Which customer is placing the order?");
           foreach (Customer cust in allCustomers)
           {
@@ -161,7 +183,8 @@ namespace Bangazon
     public void popularProducts()
     {
       InvoiceDb db = new InvoiceDb();
-      List<PopularProduct> popProds = db.getPopularProducts();
+      //List<PopularProduct> popProds = db.getPopularProducts();
+      List<PopularProduct> popProds = Product.getPopularProducts();
       Console.Clear();
       Console.WriteLine("\n*********************************************************");
       Console.WriteLine("**  Welcome to Bangazon! Command Line Ordering System  **");
