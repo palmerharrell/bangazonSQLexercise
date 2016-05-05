@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bangazon
 {
@@ -29,7 +26,6 @@ namespace Bangazon
     public void addCustomer()
     {
       Customer newCustomer = new Customer();
-      InvoiceDb db = new InvoiceDb();
 
       Console.WriteLine("Enter customer name");
       Console.Write(">");
@@ -49,15 +45,12 @@ namespace Bangazon
       Console.WriteLine("Enter phone number");
       Console.Write(">");
       newCustomer.phoneNumber = Console.ReadLine();
-      //db.addCustomer(newCustomer);
       Customer.addCustomer(newCustomer);
     }
 
     public void addPaymentOption()
     {
       PaymentOption pmt = new PaymentOption();
-      InvoiceDb db = new InvoiceDb();
-      //List<Customer> allCustomers = db.getCustomers();
       List<Customer> allCustomers = Customer.getCustomers();
       int numCusts = 0;
       int selectedCust;
@@ -81,19 +74,14 @@ namespace Bangazon
       Console.WriteLine("Enter account number");
       Console.Write(">");
       pmt.accountNumber = Console.ReadLine();
-      //db.addPmtOption(pmt);
       PaymentOption.addPmtOption(pmt);
     }
 
     public List<Product> orderProduct(List<Product> orderProducts)
     {
-      //bool productView = true;
       int prodChoice;
-      //List<Product> orderProducts = new List<Product>();
-      InvoiceDb db = new InvoiceDb();
       while (true)
       {
-        //List<Product> allProducts = db.getProducts();
         List<Product> allProducts = Product.getProducts();
         int numProds = 0;
 
@@ -113,7 +101,6 @@ namespace Bangazon
         if (prodChoice >= numProds + 1)
         {
           return orderProducts;
-          //productView = false; // Back to main menu
         }
         else
         {
@@ -126,11 +113,8 @@ namespace Bangazon
 
     public string completeOrder(List<Product> orderProducts)
     {
-      InvoiceDb db = new InvoiceDb();
       if (orderProducts.Count < 1)
       {
-        //Console.WriteLine("\nPlease add some products to your order first. Press any key to return to main menu.");
-        //Console.Read();
         return "Please add some products to your order first.";
       }
       else
@@ -147,7 +131,6 @@ namespace Bangazon
         {
           int numCusts = 0;
           int selectedCust;
-          //List<Customer> allCustomers = db.getCustomers();
           List<Customer> allCustomers = Customer.getCustomers();
           Console.WriteLine("Which customer is placing the order?");
           foreach (Customer cust in allCustomers)
@@ -159,7 +142,6 @@ namespace Bangazon
           Int32.TryParse(Console.ReadLine(), out selectedCust);
           currOrder.idCustomer = allCustomers[selectedCust - 1].idCustomer;
           Console.WriteLine("Choose a payment option");
-          //List<PaymentOption> paymentOptions = db.getPmtOptions(currOrder.idCustomer);
           List<PaymentOption> paymentOptions = PaymentOption.getPmtOptions(currOrder.idCustomer);
           int numOpts = 0;
           foreach (PaymentOption opt in paymentOptions)
@@ -169,7 +151,6 @@ namespace Bangazon
           }
           Console.Write(">");
           currOrder.idPaymentOption = int.Parse(Console.ReadLine());
-          //db.addOrder(currOrder.idCustomer, currOrder.idPaymentOption, orderProducts);
           Order.addOrder(currOrder.idCustomer, currOrder.idPaymentOption, orderProducts);
           Console.WriteLine("Your order is complete! Press any key to return to main menu.");
           orderProducts.Clear();
@@ -185,8 +166,6 @@ namespace Bangazon
 
     public void popularProducts()
     {
-      InvoiceDb db = new InvoiceDb();
-      //List<PopularProduct> popProds = db.getPopularProducts();
       List<PopularProduct> popProds = Product.getPopularProducts();
       Console.Clear();
       Console.WriteLine("\n*********************************************************");
