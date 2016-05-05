@@ -166,7 +166,7 @@ namespace Bangazon
 
     public void popularProducts()
     {
-      List<PopularProduct> popProds = Product.getPopularProducts();
+      List<PopularProduct> popProds = PopularProduct.getPopularProducts();
       Console.Clear();
       Console.WriteLine("\n*********************************************************");
       Console.WriteLine("**  Welcome to Bangazon! Command Line Ordering System  **");
