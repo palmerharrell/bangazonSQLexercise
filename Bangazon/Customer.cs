@@ -49,40 +49,6 @@ namespace Bangazon
       return customerList;
     } // End getCustomers()
 
-    public List<Product> getProducts() // read from db, return list of all products
-    {
-      string query = @"
-        SELECT * FROM Product
-        ORDER BY Product.Name
-      ";
-
-      List<Product> productList = new List<Product>();
-
-      using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\windows-workspace\\bangazonCLIordering\\Bangazon\\Invoices.mdf\";Integrated Security=True"))
-      using (SqlCommand cmd = new SqlCommand(query, connection))
-      {
-        connection.Open();
-        using (SqlDataReader reader = cmd.ExecuteReader())
-        {
-          if (reader.HasRows)
-          {
-            while (reader.Read()) // Read advances to the next row.
-            {
-              // Construct Product object and add to list
-              Product currProd = new Product();
-              currProd.idProduct = (int)reader[0];
-              currProd.idProductType = (int)reader[1];
-              currProd.name = (string)reader[2];
-              currProd.price = (float)reader[3];
-              currProd.description = (string)reader[4];
-              productList.Add(currProd);
-            }
-          }
-        }
-      }
-      return productList;
-    } // End getProducts()
-
     public static void addCustomer(Customer newCustomer)
     {
       SqlConnection sqlConnection1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\windows-workspace\\bangazonCLIordering\\Bangazon\\Invoices.mdf\";Integrated Security=True");
